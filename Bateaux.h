@@ -47,20 +47,18 @@ typedef struct {
 	char *nomBateau;
 	Genre genre;
 	typeBateau type;
-	const uint8_t taxeBase;
-	const uint8_t taxeSpec;
+	const uint16_t taxeBase;
+	const uint16_t taxeSpec;
 } Bateau;
 
-const char *type_bateau[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
-
-
+const char *typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
 
 // TODO utiliser une largeur de champ variable plutot que %-15s (un typdef format par exemple)
 // TODO afficher les taxes
 void afficher(const Bateau *b) {
 	printf("%-15s: %s\n", "Nom", b->nomBateau);
-	printf("%-15s: %s\n", "Genre", type_bateau[b->type]);
+	printf("%-15s: %s\n", "Genre", typeBateauChar[b->type]);
 	switch (b->type) {
 		case VOILIER:
 			printf("%-15s: %d\n", "Voilure [m2]", b->genre.voilier.surfaceVoilure);
@@ -71,24 +69,31 @@ void afficher(const Bateau *b) {
 			break;
 		case MOTEUR_PLAISANCE:
 			printf("%-15s: %d\n", "Moteurs [CV]", b->genre.moteur.puissance);
+			printf("%-15s: %d\n", "Longueur [m]", b->genre.moteur.typeBateauMoteur.moteurPlaisance.longueur);
 			printf("%-15s: %s\n", "Proprietaire", b->genre.moteur.typeBateauMoteur.moteurPlaisance.nomProprietaire);
 			break;
 	}
+	// TODO: add the taxes display
+	printf("%-15s: %d\n", "Taxes", b->taxeSpec + b->taxeBase);
 	printf("\n");
 
 }
 
 // TODO: créer des typedef pour les taxes
 
-Bateau voilier(const char* nom, uint16_t surfaceVoilure){
-	return (Bateau) {.nomBateau = nom, .genre = { .voilier = {.surfaceVoilure = surfaceVoilure}}, .type = VOILIER, .taxeBase = 50, .taxeSpec = surfaceVoilure < 200 ? 0 : 25};
+Bateau voilier(const char *nom, uint16_t surfaceVoilure) {
+	return (Bateau) {.nomBateau = nom, .genre = {.voilier = {.surfaceVoilure = surfaceVoilure}},
+		.type = VOILIER, .taxeBase = 50, .taxeSpec =   surfaceVoilure < 200 ? 0 : 25};
 }
 
-Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons){
-	return (Bateau) {.nomBateau = nom, .genre = { .moteur ={ .puissance = puissance, .typeBateauMoteur = { .moteurPeche = { .tonnes_poissons = tonnes_poissons}}}}, .type = MOTEUR_PECHE, .taxeBase = 100, .taxeSpec = tonnes_poissons<20 ? 0 : 100};
+Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons) {
+	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur = {.moteurPeche = {.tonnes_poissons = tonnes_poissons}}}},
+		.type = MOTEUR_PECHE, .taxeBase = 100, .taxeSpec =   tonnes_poissons < 20 ? 0 : 100};
 }
 
-Bateau plaisance(const char* nom, uint16_t puissance,uint8_t longueur, const char* proprietaire){
-	return (Bateau) {.nomBateau = nom, .genre = { .moteur ={.puissance = puissance, .typeBateauMoteur ={ .moteurPlaisance ={ .longueur = longueur, .nomProprietaire = proprietaire}}}}, .type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec = puissance<100 ? 50 : longueur*15};
+Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire) {
+	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur ={.moteurPlaisance ={.longueur = longueur, .nomProprietaire = proprietaire}}}},
+		.type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec =   puissance < 100 ? 50 :(uint16_t) longueur * 15};
 }
+
 #endif //PRG2_LABO2_BATEAUX_H
