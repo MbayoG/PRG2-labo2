@@ -47,15 +47,14 @@ typedef struct {
 	char *nomBateau;
 	Genre genre;
 	typeBateau type;
-	const uint16_t taxeBase;
-	const uint16_t taxeSpec;
+	uint16_t taxeBase;
+	uint16_t taxeSpec;
 } Bateau;
 
 const char *typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
 
 // TODO utiliser une largeur de champ variable plutot que %-15s (un typdef format par exemple)
-// TODO afficher les taxes
 void afficher(const Bateau *b) {
 	printf("%-15s: %s\n", "Nom", b->nomBateau);
 	printf("%-15s: %s\n", "Genre", typeBateauChar[b->type]);
@@ -73,13 +72,12 @@ void afficher(const Bateau *b) {
 			printf("%-15s: %s\n", "Proprietaire", b->genre.moteur.typeBateauMoteur.moteurPlaisance.nomProprietaire);
 			break;
 	}
-	// TODO: add the taxes display
 	printf("%-15s: %d\n", "Taxes", b->taxeSpec + b->taxeBase);
 	printf("\n");
 
 }
 
-// TODO: créer des typedef pour les taxes
+// TODO: créer des typedef pour les valeurs des taxes
 
 Bateau voilier(const char *nom, uint16_t surfaceVoilure) {
 	return (Bateau) {.nomBateau = nom, .genre = {.voilier = {.surfaceVoilure = surfaceVoilure}},
@@ -93,7 +91,9 @@ Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons) {
 
 Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire) {
 	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur ={.moteurPlaisance ={.longueur = longueur, .nomProprietaire = proprietaire}}}},
-		.type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec =   puissance < 100 ? 50 :(uint16_t) longueur * 15};
+		.type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec =   puissance < 100 ? 50 : (uint16_t) longueur * 15};
 }
+
+//TODO: ajouter une fonction de calcule des sommes, moyenne, etc... des taxes
 
 #endif //PRG2_LABO2_BATEAUX_H
