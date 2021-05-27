@@ -2,7 +2,7 @@
 
 int main(void) {
 
-    Bateau alinghi = {
+    /*Bateau alinghi = {
             .nomBateau = "Alinghi",
             .bateauType = VOILIER,
             .genre = {.voilier = {.surfaceVoilure = 300}}
@@ -28,11 +28,15 @@ int main(void) {
                             }
                     }
             }
-    };
-
+    };*/
+	Bateau alinghi = voilier("Alinghi", 300);
+	Bateau espadon = peche("Espadon", 1000, 20);
+	Bateau farniente = plaisance("Farniente", 100, 100, "James Lamer");
+	Bateau flyingDutch = plaisance("Flying Dutch", 20, 150, "Davy Jones");
     afficher(&alinghi);
     afficher(&espadon);
     afficher(&farniente);
+	afficher(&flyingDutch);
 
     return EXIT_SUCCESS;
 }
