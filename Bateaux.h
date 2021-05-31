@@ -54,7 +54,7 @@ typedef struct {
 const char *typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
 
-// TODO utiliser une largeur de champ variable plutot que %-15s (un typdef format par exemple)
+// TODO utiliser une largeur de champ variable plutot que %-15s (un macro format par exemple)
 void afficher(const Bateau *b) {
 	printf("%-15s: %s\n", "Nom", b->nomBateau);
 	printf("%-15s: %s\n", "Genre", typeBateauChar[b->type]);
@@ -77,7 +77,7 @@ void afficher(const Bateau *b) {
 
 }
 
-// TODO: créer des typedef pour les valeurs des taxes
+// TODO: créer des macro pour les valeurs des taxes
 
 Bateau voilier(const char *nom, uint16_t surfaceVoilure) {
 	return (Bateau) {.nomBateau = nom, .genre = {.voilier = {.surfaceVoilure = surfaceVoilure}},
@@ -94,6 +94,35 @@ Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const ch
 		.type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec =   puissance < 100 ? 50 : (uint16_t) longueur * 15};
 }
 
-//TODO: ajouter une fonction de calcule des sommes, moyenne, etc... des taxes
+//TODO: compléter la fonction de calcule des sommes, moyenne, etc... des taxes
+void afficherTaxes(Bateau bateau[], const size_t taillePort){
+	// parcourir le tableau et stocker les taxes par type de bateau
+	// effectuer les différentes opérations
+	// afficher les résultats
+	uint16_t totalVoilier = 0, totalPeche = 0, totalPlaisance = 0,
+				nbVoilier = 0, nbPeche = 0, nbPlaisance = 0;
+
+	for(size_t i = 0; i<taillePort; ++i){
+		switch(bateau[i].type){
+			case VOILIER:
+				totalVoilier += bateau[i].taxeBase + bateau[i].taxeSpec;
+				++nbVoilier;
+				break;
+			case MOTEUR_PECHE:
+				totalPeche += bateau[i].taxeBase + bateau[i].taxeSpec;
+				++nbPeche;
+				break;
+			case MOTEUR_PLAISANCE:
+				totalPlaisance += bateau[i].taxeBase + bateau[i].taxeSpec;
+				++nbPlaisance;
+				break;
+			default:
+				break;
+		}
+	}
+
+
+	printf("Somme des taxes:\n %-14s: %d","Voiliers", totalVoilier);
+}
 
 #endif //PRG2_LABO2_BATEAUX_H
