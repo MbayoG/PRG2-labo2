@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 
 
 typedef enum {
@@ -94,6 +95,11 @@ Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const ch
 		.type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec =   puissance < 100 ? 50 : (uint16_t) longueur * 15};
 }
 
+
+int cmpfunc (const void * a, const void * b) {
+	return ( *(uint16_t *)a - *(uint16_t *)b );
+}
+
 //TODO: compléter la fonction de calcule des sommes, moyenne, etc... des taxes
 void afficherTaxes(Bateau bateau[], const size_t taillePort){
 	// parcourir le tableau et stocker les taxes par type de bateau
@@ -101,11 +107,13 @@ void afficherTaxes(Bateau bateau[], const size_t taillePort){
 	// afficher les résultats
 	uint16_t totalVoilier = 0, totalPeche = 0, totalPlaisance = 0,
 				nbVoilier = 0, nbPeche = 0, nbPlaisance = 0;
+	uint16_t taxesVoilier[taillePort];
 
 	for(size_t i = 0; i<taillePort; ++i){
 		switch(bateau[i].type){
 			case VOILIER:
 				totalVoilier += bateau[i].taxeBase + bateau[i].taxeSpec;
+				taxesVoilier[nbVoilier] = bateau[i].taxeBase + bateau[i].taxeSpec;
 				++nbVoilier;
 				break;
 			case MOTEUR_PECHE:
@@ -120,9 +128,19 @@ void afficherTaxes(Bateau bateau[], const size_t taillePort){
 				break;
 		}
 	}
+	qsort(taxesVoilier, nbVoilier, sizeof(uint16_t), cmpfunc);
+	double ecartTypeVoilier = 0;
+	for(int i = 0; i < nbVoilier; ++i){
+		ecartTypeVoilier += pow((double)taxesVoilier[i]-((double)totalVoilier/nbVoilier),2);
+	}
 
+	ecartTypeVoilier/=(totalVoilier/nbVoilier);
 
-	printf("Somme des taxes:\n %-14s: %d","Voiliers", totalVoilier);
+	printf("Somme des taxes:\n %-14s: %d\n","Voiliers", totalVoilier);
+	printf("Moyenne des taxes:\n %-14s: %d\n","Voiliers", totalVoilier/nbVoilier);
+	printf("Mediane des taxes:\n %-14s: %d\n","Voiliers", nbVoilier%2 ? taxesVoilier[nbVoilier/2] : (taxesVoilier[(nbVoilier+1)/2]+taxesVoilier[(nbVoilier-1)/2])/2);
+	printf("Moyenne des taxes:\n %-14s: %d\n","Voiliers", totalVoilier/nbVoilier);
+	printf("Ecart type des taxes:\n %-14s: %.1f\n","Voilier", ecartTypeVoilier);
 }
 
 #endif //PRG2_LABO2_BATEAUX_H
