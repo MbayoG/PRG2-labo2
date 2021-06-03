@@ -107,7 +107,7 @@ void afficherTaxes(Bateau bateau[], const size_t taillePort){
 	// afficher les résultats
 	uint16_t totalVoilier = 0, totalPeche = 0, totalPlaisance = 0,
 				nbVoilier = 0, nbPeche = 0, nbPlaisance = 0;
-	uint16_t taxesVoilier[taillePort];
+	uint16_t taxesVoilier[taillePort], taxesPeche[taillePort], taxesPlaisance[taillePort];
 
 	for(size_t i = 0; i<taillePort; ++i){
 		switch(bateau[i].type){
@@ -118,10 +118,12 @@ void afficherTaxes(Bateau bateau[], const size_t taillePort){
 				break;
 			case MOTEUR_PECHE:
 				totalPeche += bateau[i].taxeBase + bateau[i].taxeSpec;
+				taxesPeche[nbPeche] = bateau[i].taxeBase + bateau[i].taxeSpec;
 				++nbPeche;
 				break;
 			case MOTEUR_PLAISANCE:
 				totalPlaisance += bateau[i].taxeBase + bateau[i].taxeSpec;
+				taxesPlaisance[nbPlaisance] = bateau[i].taxeBase + bateau[i].taxeSpec;
 				++nbPlaisance;
 				break;
 			default:
@@ -129,18 +131,33 @@ void afficherTaxes(Bateau bateau[], const size_t taillePort){
 		}
 	}
 	qsort(taxesVoilier, nbVoilier, sizeof(uint16_t), cmpfunc);
-	double ecartTypeVoilier = 0;
+	double moyenneVoilier = (double)totalVoilier/nbVoilier;
+	double moyennePeche = (double)totalPeche/nbPeche;
+	double moyennePlaisance = (double)totalPlaisance/nbPlaisance;
+
+	double ecartTypeVoilier = 0, ecartTypePeche = 0, ecartTypePlaisance = 0;
 	for(int i = 0; i < nbVoilier; ++i){
-		ecartTypeVoilier += pow((double)taxesVoilier[i]-((double)totalVoilier/nbVoilier),2);
+		ecartTypeVoilier += pow((double)taxesVoilier[i]-moyenneVoilier,2);
 	}
+	for(int i = 0; i < nbPeche; ++i){
+		ecartTypePeche += pow((double)taxesPeche[i]-moyennePeche,2);
+	}
+	for(int i = 0; i < nbPlaisance; ++i){
+		ecartTypePlaisance += pow((double)taxesPlaisance[i]-moyennePlaisance,2);
+	}
+	ecartTypeVoilier/=moyenneVoilier; //TODO: verifier si moyenne !=0
+	ecartTypePeche/=moyennePeche;
+	ecartTypePlaisance/=moyennePlaisance;
 
-	ecartTypeVoilier/=(totalVoilier/nbVoilier);
 
-	printf("Somme des taxes:\n %-14s: %d\n","Voiliers", totalVoilier);
-	printf("Moyenne des taxes:\n %-14s: %d\n","Voiliers", totalVoilier/nbVoilier);
-	printf("Mediane des taxes:\n %-14s: %d\n","Voiliers", nbVoilier%2 ? taxesVoilier[nbVoilier/2] : (taxesVoilier[(nbVoilier+1)/2]+taxesVoilier[(nbVoilier-1)/2])/2);
-	printf("Moyenne des taxes:\n %-14s: %d\n","Voiliers", totalVoilier/nbVoilier);
-	printf("Ecart type des taxes:\n %-14s: %.1f\n","Voilier", ecartTypeVoilier);
+	double medianeVoilier = nbVoilier%2 ? taxesVoilier[nbVoilier/2] : (double)(taxesVoilier[(nbVoilier+1)/2]+taxesVoilier[(nbVoilier-1)/2])/2;
+	double medianePeche = nbPeche%2 ? taxesPeche[nbPeche/2] : (double)(taxesPeche[(nbPeche+1)/2]+taxesPeche[(nbPeche-1)/2])/2;
+	double medianePlaisance = nbPlaisance%2 ? taxesPlaisance[nbPlaisance/2] : (double)(taxesPlaisance[(nbPlaisance+1)/2]+taxesPlaisance[(nbPlaisance-1)/2])/2;
+
+	printf("Somme des taxes:\n %-20s: %d\n %-20s: %d\n %-20s: %d\n","Voiliers", totalVoilier, "Bateaux de peche", totalPeche, "Bateaux de plaisance", totalPlaisance);
+	printf("Moyenne des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n","Voiliers", moyenneVoilier, "Bateaux de peche", moyennePeche, "Bateaux de plaisance", moyennePlaisance);
+	printf("Mediane des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n","Voiliers", medianeVoilier, "Bateaux de peche", medianePeche, "Bateaux de plaisance", medianePlaisance);
+	printf("Ecart type des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n","Voilier", ecartTypeVoilier, "Bateaux de peche", ecartTypePeche, "Bateaux de plaisance", ecartTypePlaisance);
 }
 
 #endif //PRG2_LABO2_BATEAUX_H
