@@ -15,10 +15,10 @@ int main(void) {
 	size_t taillePort = sizeof(port)/sizeof(Bateau);
 
 	for(size_t i = 0; i < taillePort; ++i){
-		afficher(&port[i]);
+		afficherBateaux(&port[i]);
 	}
 
-	afficherTaxes(port, taillePort);
+	calculTaxes(port, taillePort);
 
 
 	return EXIT_SUCCESS;

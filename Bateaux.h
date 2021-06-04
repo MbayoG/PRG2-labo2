@@ -7,13 +7,13 @@
 #include <string.h>
 #include <math.h>
 
-#define FORMAT_TAXES "des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n\n"
+#define FORMAT_TAXES "Taxes des %s\n Somme : %d\n Moyenne : %.2f\n Mediane : %.2f\n Ecart-type : %.2f\n"
 
 typedef enum {
 	VOILIER,
 	MOTEUR_PECHE,
 	MOTEUR_PLAISANCE
-} typeBateau;
+} TypeBateau;
 
 typedef struct {
 	uint16_t surfaceVoilure;
@@ -26,7 +26,7 @@ typedef struct {
 
 typedef struct {
 	uint8_t longueur;
-	const char *nomProprietaire;
+	const char* nomProprietaire;
 } MoteurPlaisance;
 
 typedef union {
@@ -46,33 +46,32 @@ typedef union {
 } Genre;
 
 typedef struct {
-	char *nomBateau;
+	const char* nomBateau;
 	Genre genre;
-	typeBateau type;
+	TypeBateau type;
 	uint16_t taxeBase;
 	uint16_t taxeSpec;
 } Bateau;
 
 static const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
-double calculTaxes(const double* taxes);
+double afficheTaxes(TypeBateau type, const double* somme, const double* mediane, const double* moyenne, const double* ecartType);
 
-// TODO utiliser une largeur de champ variable plutot que %-15s (un macro format par exemple)
-void afficher(const Bateau *b);
+void afficherBateaux(const Bateau *b);
 
-// TODO: créer des macro pour les valeurs des taxes
+// TODO: créer des macro pour les valeurs des taxes, ou une struct et 2 unions
 
-Bateau voilier(const char *nom, uint16_t surfaceVoilure);
-
-
-Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons);
-
-Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire);
+Bateau voilier(const char* nom, uint16_t surfaceVoilure);
 
 
-int cmpfunc (const void * a, const void * b);
+Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons);
+
+Bateau plaisance(const char* nom, uint16_t puissance, uint8_t longueur, const char* proprietaire);
+
+
+int cmpfunc (const void* a, const void * b);
 
 //TODO: compléter la fonction de calcule des sommes, moyenne, etc... des taxes
-void afficherTaxes(Bateau bateau[], const size_t taillePort);
+void calculTaxes(Bateau *bateau, const size_t taillePort);
 
 #endif //PRG2_LABO2_BATEAUX_H
