@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2020.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\PRG2_labo2.dir/objects.a
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-W\mingw64\bin\ar.exe cr CMakeFiles\PRG2_labo2.dir/objects.a @CMakeFiles\PRG2_labo2.dir\objects1.rsp
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-W\mingw64\bin\gcc.exe -Wall -Wextra -Wconversion -Wsign-conversion -pedantic -g   -Wl,--whole-archive CMakeFiles\PRG2_labo2.dir/objects.a -Wl,--no-whole-archive  -o PRG2_labo2.exe -Wl,--out-implib,libPRG2_labo2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\PRG2_labo2.dir\linklibs.rsp
