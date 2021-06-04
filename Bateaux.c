@@ -1,109 +1,169 @@
 #include "Bateaux.h"
 
 void afficherBateaux(const Bateau *b) {
-	printf("%-15s: %s\n", "Nom", b->nomBateau);
-	printf("%-15s: %s\n", "Genre", typeBateauChar[b->type]);
-	switch (b->type) {
-		case VOILIER:
-			printf("%-15s: %d\n", "Voilure [m2]", b->genre.voilier.surfaceVoilure);
-			break;
-		case MOTEUR_PECHE:
-			printf("%-15s: %d\n", "Moteurs [CV]", b->genre.moteur.puissance);
-			printf("%-15s: %d\n", "Peche [t]", b->genre.moteur.typeBateauMoteur.moteurPeche.tonnes_poissons);
-			break;
-		case MOTEUR_PLAISANCE:
-			printf("%-15s: %d\n", "Moteurs [CV]", b->genre.moteur.puissance);
-			printf("%-15s: %d\n", "Longueur [m]", b->genre.moteur.typeBateauMoteur.moteurPlaisance.longueur);
-			printf("%-15s: %s\n", "Proprietaire", b->genre.moteur.typeBateauMoteur.moteurPlaisance.nomProprietaire);
-			break;
-	}
-	printf("%-15s: %d\n", "Taxes", b->taxeSpec + b->taxeBase);
-	printf("\n");
+   printf(FORMAT_BATEAU"%s\n", "Nom", b->nomBateau);
+   printf(FORMAT_BATEAU"%s\n", "Genre", typeBateauChar[b->type]);
+   switch (b->type) {
+      case VOILIER:
+         printf(FORMAT_BATEAU"%d\n", "Voilure [m2]", b->genre.voilier.surfaceVoilure);
+         printf(FORMAT_BATEAU"%.2f\n", "Taxe", calculerVoilierTaxe(b));
+         break;
+      case MOTEUR_PECHE:
+         printf(FORMAT_BATEAU"%d\n", "Moteurs [CV]", b->genre.moteur.puissance);
+         printf(FORMAT_BATEAU"%d\n", "Peche [t]", b->genre.moteur.typeBateauMoteur.typePeche.tonnes_poissons);
+         printf(FORMAT_BATEAU"%.2f\n", "Taxe", calculerPecheTaxe(b));
+         break;
+      case MOTEUR_PLAISANCE:
+         printf(FORMAT_BATEAU"%d\n", "Moteurs [CV]", b->genre.moteur.puissance);
+         printf(FORMAT_BATEAU"%d\n", "Longueur [m]", b->genre.moteur.typeBateauMoteur.typePlaisance.longueur);
+         printf(FORMAT_BATEAU"%s\n", "Proprietaire", b->genre.moteur.typeBateauMoteur.typePlaisance.nomProprietaire);
+         printf(FORMAT_BATEAU"%.2f\n", "Taxe", calculerPlaisanceTaxe(b));
+         break;
+   }
+   printf("\n");
+}
 
+int compare (const void * a, const void * b) {
+   int ret = 0;
+   double const *pa = a;
+   double const *pb = b;
+   double diff = *pa - *pb;
+   if (diff > 0) {
+      ret = 1;
+   }
+   else if (diff < 0) {
+      ret = -1;
+   } else {
+      ret = 0;
+   }
+   return ret;
 }
 
 Bateau voilier(const char *nom, uint16_t surfaceVoilure) {
-	return (Bateau) {.nomBateau = nom, .genre = {.voilier = {.surfaceVoilure = surfaceVoilure}},
-		.type = VOILIER, .taxeBase = 50, .taxeSpec =   surfaceVoilure < 200 ? 0 : 25};
+   return (Bateau) {.nomBateau = nom, .genre = {.voilier = {.surfaceVoilure = surfaceVoilure}},
+      .type = VOILIER};
 }
 
 Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons) {
-	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur = {.moteurPeche = {.tonnes_poissons = tonnes_poissons}}}},
-		.type = MOTEUR_PECHE, .taxeBase = 100, .taxeSpec =   tonnes_poissons < 20 ? 0 : 100};
+   return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur = {.typePeche = {.tonnes_poissons = tonnes_poissons}}}},
+      .type = MOTEUR_PECHE};
 }
 
 Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire) {
-	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur ={.moteurPlaisance ={.longueur = longueur, .nomProprietaire = proprietaire}}}},
-		.type = MOTEUR_PLAISANCE, .taxeBase = 100, .taxeSpec =   puissance < 100 ? 50 : (uint16_t) longueur * 15};
+   return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur ={.typePlaisance ={.longueur = longueur, .nomProprietaire = proprietaire}}}},
+      .type = MOTEUR_PLAISANCE};
 }
 
-
-int cmpfunc (const void * a, const void * b) {
-	return ( *(uint16_t *)a - *(uint16_t *)b );
+double calculerVoilierTaxe(const Bateau* b) {
+   double taxe = TAXE_BASE_VOILIER;
+   if (b->genre.voilier.surfaceVoilure >= TAXE_LIMITE_VOILIER)
+      taxe += TAXE_SPECIFIQUE_VOILIER;
+   return taxe;
 }
 
-//TODO: Faire un tableau bi-dimensionnel pour les taxes
-//TODO: Séparer affichage et calcule
-void calculTaxes(Bateau *bateau, const size_t taillePort) {
-	// parcourir le tableau et stocker les taxes par type de bateau
-	// effectuer les différentes opérations
-	// afficherBateaux les résultats
-	uint16_t totalVoilier = 0, totalPeche = 0, totalPlaisance = 0,
-		nbVoilier = 0, nbPeche = 0, nbPlaisance = 0;
-	uint16_t taxesVoilier[taillePort], taxesPeche[taillePort], taxesPlaisance[taillePort];
-
-	for (size_t i = 0; i < taillePort; ++i) {
-		switch (bateau[i].type) {
-			case VOILIER:
-				totalVoilier += bateau[i].taxeBase + bateau[i].taxeSpec;
-				taxesVoilier[nbVoilier] = bateau[i].taxeBase + bateau[i].taxeSpec;
-				++nbVoilier;
-				break;
-			case MOTEUR_PECHE:
-				totalPeche += bateau[i].taxeBase + bateau[i].taxeSpec;
-				taxesPeche[nbPeche] = bateau[i].taxeBase + bateau[i].taxeSpec;
-				++nbPeche;
-				break;
-			case MOTEUR_PLAISANCE:
-				totalPlaisance += bateau[i].taxeBase + bateau[i].taxeSpec;
-				taxesPlaisance[nbPlaisance] = bateau[i].taxeBase + bateau[i].taxeSpec;
-				++nbPlaisance;
-				break;
-			default:
-				break;
-		}
-	}
-	qsort(taxesVoilier, nbVoilier, sizeof(uint16_t), cmpfunc);
-	double moyenneVoilier = (double) totalVoilier / nbVoilier;
-	double moyennePeche = (double) totalPeche / nbPeche;
-	double moyennePlaisance = (double) totalPlaisance / nbPlaisance;
-
-	double ecartTypeVoilier = 0, ecartTypePeche = 0, ecartTypePlaisance = 0;
-	for (int i = 0; i < nbVoilier; ++i) {
-		ecartTypeVoilier += pow((double) taxesVoilier[i] - moyenneVoilier, 2);
-	}
-	for (int i = 0; i < nbPeche; ++i) {
-		ecartTypePeche += pow((double) taxesPeche[i] - moyennePeche, 2);
-	}
-	for (int i = 0; i < nbPlaisance; ++i) {
-		ecartTypePlaisance += pow((double) taxesPlaisance[i] - moyennePlaisance, 2);
-	}
-	ecartTypeVoilier /= moyenneVoilier; //TODO: verifier si moyenne !=0
-	ecartTypePeche /= moyennePeche;
-	ecartTypePlaisance /= moyennePlaisance;
-
-	//TODO: passer taxes en double
-	double medianeVoilier = nbVoilier % 2 ? taxesVoilier[nbVoilier / 2] :
-									(double) (taxesVoilier[(nbVoilier + 1) / 2] + taxesVoilier[(nbVoilier - 1) / 2]) / 2;
-	double medianePeche =
-		nbPeche % 2 ? taxesPeche[nbPeche / 2] : (double) (taxesPeche[(nbPeche + 1) / 2] + taxesPeche[(nbPeche - 1) / 2]) /
-															 2;
-	double medianePlaisance = nbPlaisance % 2 ? taxesPlaisance[nbPlaisance / 2] :
-									  (double) (taxesPlaisance[(nbPlaisance + 1) / 2] + taxesPlaisance[(nbPlaisance - 1) / 2]) /
-									  2;
+double calculerPecheTaxe(const Bateau* b){
+   double taxe = TAXE_BASE_MOTEUR;
+   if (b->genre.moteur.typeBateauMoteur.typePeche.tonnes_poissons >= TAXE_LIMITE_PECHE)
+      taxe += TAXE_SPECIFIQUE_PECHE;
+   return taxe;
 }
-//TODO: macro format
-double afficheTaxes(TypeBateau type, const double *somme, const double *mediane, const double *moyenne, const double *ecartType) {
-	printf(FORMAT_TAXES, typeBateauChar[type], somme, moyenne, mediane, ecartType);
+
+double calculerPlaisanceTaxe(const Bateau* b){
+   double taxe = TAXE_BASE_MOTEUR;
+   if (b->genre.moteur.puissance < TAXE_LIMITE_PLAISANCE)
+      taxe += TAXE_SPECIFIQUE_PLAISANCE;
+   else
+      taxe += b->genre.moteur.typeBateauMoteur.typePlaisance.longueur * TAXE_PLAISANCE_MULTIPLIEUR;
+   return taxe;
+}
+
+double calculerMediane(const double taxes[], const unsigned types[], size_t taille, TypeBateau type, size_t nbBateau) {
+   double taxesSel[nbBateau];
+   size_t cpt = 0;
+   for (size_t i = 0; i < taille; ++i) {
+      if (types[i] == type) {
+         taxesSel[cpt] = taxes[i];
+         ++cpt;
+      }
+   }
+
+   qsort(taxesSel, nbBateau, sizeof(double), compare);
+   double mediane = 0.;
+   if(nbBateau % 2){
+      mediane = taxesSel[nbBateau/2];
+   } else {
+      mediane = (taxesSel[(nbBateau + 1) / 2] + taxesSel[(nbBateau - 1) / 2]) / 2;
+   }
+   return mediane;
+}
+
+double calculerEcartType(const double taxes[], const unsigned types[], size_t taille, double moyenne, TypeBateau type){
+   double ecartType = 0.;
+   double cpt = 0;
+   for (size_t i = 0; i < taille; ++i) {
+      if (types[i] == type) {
+         double diff = taxes[i] - moyenne;
+         ecartType += pow(diff, 2);
+         ++cpt;
+      }
+   }
+   return sqrt(ecartType / cpt);
+}
+
+void calculTaxes(Bateau *bateau, size_t taillePort) {
+
+   unsigned typeBateau[taillePort];
+
+   double taxes[taillePort], taxe = 0.;
+   double sommeTaxesVoilier = 0, sommeTaxesPeche = 0, sommeTaxesPlaisance = 0;
+   unsigned nbVoilier = 0, nbPeche = 0, nbPlaisance = 0;
+
+   for (size_t i = 0; i < taillePort; ++i) {
+
+      typeBateau[i] = bateau[i].type;
+
+      switch (bateau[i].type) {
+         case VOILIER:
+            taxe = calculerVoilierTaxe(bateau + i);
+            sommeTaxesVoilier += taxe;
+            taxes[i] = taxe;
+            ++nbVoilier;
+            break;
+         case MOTEUR_PECHE:
+            taxe = calculerPecheTaxe(bateau + i);
+            sommeTaxesPeche += taxe;
+            taxes[i] = taxe;
+            ++nbPeche;
+            break;
+         case MOTEUR_PLAISANCE:
+            taxe = calculerPlaisanceTaxe(bateau + i);
+            sommeTaxesPlaisance += taxe;
+            taxes[i] = taxe;
+            ++nbPlaisance;
+            break;
+         default:
+            break;
+      }
+   }
+
+   double moyenneVoilier = (double)sommeTaxesVoilier/(double)nbVoilier;
+   double moyennePeche = (double)sommeTaxesPeche/(double)nbPeche;
+   double moyennePlaisance = (double)sommeTaxesPlaisance/(double)nbPlaisance;
+
+   double medianeVoilier = calculerMediane(taxes,typeBateau,taillePort,VOILIER,nbVoilier);
+   double medianePeche = calculerMediane(taxes,typeBateau,taillePort,MOTEUR_PECHE,nbPeche);
+   double medianePlaisance = calculerMediane(taxes,typeBateau,taillePort,MOTEUR_PLAISANCE,nbPlaisance);
+
+   double ecartTypeVoilier = calculerEcartType(taxes, typeBateau, taillePort, moyenneVoilier, VOILIER);
+   double ecartTypePeche = calculerEcartType(taxes, typeBateau, taillePort, moyennePeche, MOTEUR_PECHE);
+   double ecartTypePlaisance = calculerEcartType(taxes, typeBateau, taillePort, moyennePlaisance, MOTEUR_PLAISANCE);
+
+   afficheTaxes(VOILIER, sommeTaxesVoilier, moyenneVoilier, medianeVoilier, ecartTypeVoilier);
+   afficheTaxes(MOTEUR_PECHE, sommeTaxesPeche, moyennePeche, medianePeche, ecartTypePeche);
+   afficheTaxes(MOTEUR_PLAISANCE, sommeTaxesPlaisance, moyennePlaisance, medianePlaisance, ecartTypePlaisance);
+}
+
+double afficheTaxes(TypeBateau type, double somme, double moyenne, double mediane, double ecartType) {
+   printf(FORMAT_TAXES, typeBateauChar[type], somme, moyenne, mediane, ecartType);
 }
 
