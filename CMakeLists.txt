@@ -3,4 +3,4 @@ project(PRG2_labo2 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(PRG2_labo2 main.c Bateaux.h)
+add_executable(PRG2_labo2 main.c Bateaux.c)
