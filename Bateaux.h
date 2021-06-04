@@ -67,12 +67,12 @@ typedef struct {
 static const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
 /**
- * Fonction de comparaison pour qsort.
+ * Fonction de comparaison de variables de type double pour qsort.
  * @param a -> Valeur à comparer
  * @param b -> Valeur à comparer
  * @return -1 si inférieure; 0 si égale; 1 si supérieure.
  */
-int compare (const void * a, const void * b);
+int comparerDouble (const void * a, const void * b);
 
 /**
  * Affiche les statistiques des taxes
@@ -82,7 +82,7 @@ int compare (const void * a, const void * b);
  * @param mediane   -> Médiane des taxes selon le type de bateau.
  * @param ecartType -> Ecart-Type des taxes selon le type de bateau.
  */
-void afficheTaxes(TypeBateau type, double somme, double moyenne, double mediane, double ecartType);
+void afficherStatistiques(TypeBateau type, double somme, double moyenne, double mediane, double ecartType);
 
 /**
  * Affiche un bateau.
@@ -165,6 +165,6 @@ double calculerEcartType(const double taxes[], const unsigned types[], size_t ta
  * @param port          -> Port contenant des bateaux.
  * @param taillePort    -> Nombre de bateau total présent dans le port.
  */
-void calculTaxes(Bateau port[], size_t taillePort);
+void calculerStatistiques(Bateau *port, size_t taillePort);
 
 #endif //PRG2_LABO2_BATEAUX_H

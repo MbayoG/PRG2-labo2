@@ -23,7 +23,7 @@ void afficherBateaux(const Bateau *b) {
    printf("\n");
 }
 
-int compare (const void * a, const void * b) {
+int comparerDouble (const void * a, const void * b) {
    // Comme la comparaison de double par l'opérande == est impossible.
    // Nous comparons les valeurs par leurs différences.
    int ret = 0;
@@ -92,7 +92,7 @@ double calculerMediane(const double taxes[], const unsigned types[], size_t tail
    }
 
    // Calcule de la médiane.
-   qsort(taxesSel, nbBateau, sizeof(double), compare);
+   qsort(taxesSel, nbBateau, sizeof(double), comparerDouble);
    double mediane = 0.;
    if(nbBateau % 2) {
       mediane = taxesSel[nbBateau/2];
@@ -116,7 +116,7 @@ double calculerEcartType(const double taxes[], const unsigned types[], size_t ta
    return sqrt(ecartType / cpt);
 }
 
-void calculTaxes(Bateau port[], size_t taillePort) {
+void calculerStatistiques(Bateau *port, size_t taillePort) {
 
    // Étant données que nous ne connaissons pas encore le nombre de bateaux par type
    // et que nous ne voulons pas parcourir le port plus qu'il ne faut, ni initialiser des tableaux de trop grande tailles,
@@ -172,13 +172,13 @@ void calculTaxes(Bateau port[], size_t taillePort) {
    double ecartTypePlaisance  = calculerEcartType(taxes, typeBateau, taillePort, moyennePlaisance, MOTEUR_PLAISANCE);
 
    // Affichage des statistiques par type.
-   afficheTaxes(VOILIER, sommeTaxesVoilier, moyenneVoilier, medianeVoilier, ecartTypeVoilier);
-   afficheTaxes(MOTEUR_PECHE, sommeTaxesPeche, moyennePeche, medianePeche, ecartTypePeche);
-   afficheTaxes(MOTEUR_PLAISANCE, sommeTaxesPlaisance, moyennePlaisance, medianePlaisance, ecartTypePlaisance);
+   afficherStatistiques(VOILIER, sommeTaxesVoilier, moyenneVoilier, medianeVoilier, ecartTypeVoilier);
+   afficherStatistiques(MOTEUR_PECHE, sommeTaxesPeche, moyennePeche, medianePeche, ecartTypePeche);
+   afficherStatistiques(MOTEUR_PLAISANCE, sommeTaxesPlaisance, moyennePlaisance, medianePlaisance, ecartTypePlaisance);
 }
 
 // TODO: Mieux formatter l'affichage des statistiques.
-void afficheTaxes(TypeBateau type, double somme, double moyenne, double mediane, double ecartType) {
+void afficherStatistiques(TypeBateau type, double somme, double moyenne, double mediane, double ecartType) {
    printf(FORMAT_TAXES, typeBateauChar[type], somme, moyenne, mediane, ecartType);
 }
 

@@ -18,7 +18,7 @@ int main(void) {
 		afficherBateaux(&port[i]);
 	}
 
-	calculTaxes(port, taillePort);
+   calculerStatistiques(port, taillePort);
 
 
 	return EXIT_SUCCESS;
