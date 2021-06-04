@@ -42,7 +42,8 @@ int cmpfunc (const void * a, const void * b) {
 	return ( *(uint16_t *)a - *(uint16_t *)b );
 }
 
-//TODO: compléter la fonction de calcule des sommes, moyenne, etc... des taxes
+//TODO: Faire un tableau bi-dimensionnel pour les taxes
+//TODO: Séparer affichage et calcule
 void afficherTaxes(Bateau bateau[], const size_t taillePort){
 	// parcourir le tableau et stocker les taxes par type de bateau
 	// effectuer les différentes opérations
@@ -99,7 +100,11 @@ void afficherTaxes(Bateau bateau[], const size_t taillePort){
 	//TODO: macro format
 	//TODO: fct toString
 	printf("Somme des taxes:\n %-20s: %d\n %-20s: %d\n %-20s: %d\n\n","Voiliers", totalVoilier, "Bateaux de peche", totalPeche, "Bateaux de plaisance", totalPlaisance);
-	printf("Moyenne des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n\n","Voiliers", moyenneVoilier, "Bateaux de peche", moyennePeche, "Bateaux de plaisance", moyennePlaisance);
-	printf("Mediane des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n\n","Voiliers", medianeVoilier, "Bateaux de peche", medianePeche, "Bateaux de plaisance", medianePlaisance);
-	printf("Ecart type des taxes:\n %-20s: %.1f\n %-20s: %.1f\n %-20s: %.1f\n\n","Voilier", ecartTypeVoilier, "Bateaux de peche", ecartTypePeche, "Bateaux de plaisance", ecartTypePlaisance);
+	printf("Moyenne "FORMAT_TAXES, typeBateauChar[VOILIER], moyenneVoilier, typeBateauChar[MOTEUR_PECHE], moyennePeche, typeBateauChar[MOTEUR_PLAISANCE], moyennePlaisance);
+	printf("Mediane "FORMAT_TAXES, typeBateauChar[VOILIER], medianeVoilier, typeBateauChar[MOTEUR_PECHE], medianePeche, typeBateauChar[MOTEUR_PLAISANCE], medianePlaisance);
+	printf("Ecart type "FORMAT_TAXES, typeBateauChar[VOILIER], ecartTypeVoilier, typeBateauChar[MOTEUR_PECHE], ecartTypePeche, typeBateauChar[MOTEUR_PLAISANCE], ecartTypePlaisance);
+}
+
+double calculTaxes(const double* taxes){
+
 }

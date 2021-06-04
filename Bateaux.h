@@ -55,6 +55,7 @@ typedef struct {
 
 static const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
+double calculTaxes(const double* taxes);
 
 // TODO utiliser une largeur de champ variable plutot que %-15s (un macro format par exemple)
 void afficher(const Bateau *b);
