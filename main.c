@@ -15,6 +15,7 @@ int main(void) {
 	size_t taillePort = sizeof(port)/sizeof(Bateau);
 
 	for(size_t i = 0; i < taillePort; ++i){
+		printf("BATEAU %d:\n", (int)i+1);
 		afficherBateaux(&port[i]);
 	}
 

@@ -21,7 +21,7 @@
 
 #define TAXE_PLAISANCE_MULTIPLIEUR 15. // Multiplieur pour la taxe spécifique des bateaux de plaisance.
 
-#define FORMAT_TAXES "Taxes des %s\n Somme : %.2f\n Moyenne : %.2f\n Mediane : %.2f\n Ecart-type : %.2f\n" // Format pour l'affichage des statisqiques des taxes.
+#define FORMAT_TAXES "Taxes des %s\n  Somme : %.2f\n  Moyenne : %.2f\n  Mediane : %.2f\n  Ecart-type : %.2f\n\n" // Format pour l'affichage des statisqiques des taxes.
 #define FORMAT_BATEAU "%-15s:" // Format pour l'affichage des bateaux.
 
 typedef enum {

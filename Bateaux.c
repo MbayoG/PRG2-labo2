@@ -171,6 +171,9 @@ void calculerStatistiques(Bateau *port, size_t taillePort) {
    double ecartTypePeche      = calculerEcartType(taxes, typeBateau, taillePort, moyennePeche, MOTEUR_PECHE);
    double ecartTypePlaisance  = calculerEcartType(taxes, typeBateau, taillePort, moyennePlaisance, MOTEUR_PLAISANCE);
 
+   //Affichage du séparateur entre les bateaux et les taxes
+   printf("-----------------------------------------------\n");
+
    // Affichage des statistiques par type.
    afficherStatistiques(VOILIER, sommeTaxesVoilier, moyenneVoilier, medianeVoilier, ecartTypeVoilier);
    afficherStatistiques(MOTEUR_PECHE, sommeTaxesPeche, moyennePeche, medianePeche, ecartTypePeche);
