@@ -1,5 +1,8 @@
 #include "Bateaux.h"
 
+// Déclarée dans le fichier .c pour éviter le "defined but not used" warning de -Wunused-variable.
+static const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
+
 void afficherBateaux(const Bateau *b) {
 	printf(FORMAT_BATEAU"%s\n", "Nom", b->nomBateau);
 	printf(FORMAT_BATEAU"%s\n", "Genre", typeBateauChar[b->type]);

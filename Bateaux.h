@@ -25,46 +25,45 @@
 #define FORMAT_BATEAU "%-15s:" // Format pour l'affichage des bateaux.
 
 typedef enum {
-	VOILIER,
-	MOTEUR_PECHE,
-	MOTEUR_PLAISANCE
+   VOILIER,
+   MOTEUR_PECHE,
+   MOTEUR_PLAISANCE
 } TypeBateau;
 
 typedef struct {
-	uint16_t surfaceVoilure;
+   uint16_t surfaceVoilure;
 } Voilier;
 
 typedef struct {
-	uint8_t tonnes_poissons;
+   uint8_t tonnes_poissons;
 } Peche;
 
 typedef struct {
-	uint8_t longueur;
-	const char* nomProprietaire;
+   uint8_t longueur;
+   const char* nomProprietaire;
 } Plaisance;
 
 typedef union {
-	Peche typePeche;
-	Plaisance typePlaisance;
+   Peche typePeche;
+   Plaisance typePlaisance;
 } TypeBateauMoteur;
 
 typedef struct {
-	uint16_t puissance;
-	TypeBateauMoteur typeBateauMoteur;
+   uint16_t puissance;
+   TypeBateauMoteur typeBateauMoteur;
 } Moteur;
 
 typedef union {
-	Voilier voilier;
-	Moteur moteur;
+   Voilier voilier;
+   Moteur moteur;
 } Genre;
 
 typedef struct {
-	const char* nomBateau;
-	Genre genre;
-	TypeBateau type;
+   const char* nomBateau;
+   Genre genre;
+   TypeBateau type;
 } Bateau;
 
-static const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 
 /**
  * Fonction de comparaison de variables de type double pour qsort.
