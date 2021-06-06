@@ -91,7 +91,7 @@ void afficherStatistiques(TypeBateau type, double somme, double moyenne, double 
 void afficherBateaux(const Bateau *b);
 
 /**
- * Créé un voilier.
+ * Crée un voilier.
  * @param nom               -> Nom du voilier.
  * @param surfaceVoilure    -> Surface de voilure.
  * @return Le bateau créé.
@@ -99,16 +99,16 @@ void afficherBateaux(const Bateau *b);
 Bateau voilier(const char* nom, uint16_t surfaceVoilure);
 
 /**
- * Créé un bateau de pêche.
+ * Crée un bateau de pêche.
  * @param nom               -> Nom du bateau.
  * @param puissance         -> Puissance en CV des moteurs.
- * @param tonnes_poissons   -> Tonnes de poisson dont le bateau est autorisé à pécher.
+ * @param tonnes_poissons   -> Tonnes de poisson que le bateau est autorisé à pécher.
  * @return Le bateau créé.
  */
 Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons);
 
 /**
- * Créé un bateau de plaisance.
+ * Crée un bateau de plaisance.
  * @param nom           -> Nom du bateau.
  * @param puissance     -> Puissance des moteurs.
  * @param longueur      -> Longueur du bateau.
@@ -142,7 +142,7 @@ double calculerPlaisanceTaxe(const Bateau* b);
  * Calcule la médiane pour un type de bateau.
  * @param taxes     -> Liste des taxes de n'importe quel type de bateau.
  * @param types     -> Liste des types de chaque bateau présent dans le port. /!\ Elle doit correspondre à l'ordre de la liste des taxes.
- * @param taille    -> Nombre de bateau total.
+ * @param taille    -> Nombre de bateaux total.
  * @param type      -> Type des bateaux pour lesquels nous voulons calculer la médiane.
  * @param nbBateau  -> Nombre de bateaux de ce type.
  * @return La médiane pour le type de bateaux sélectionné.
@@ -155,15 +155,15 @@ double calculerMediane(const double taxes[], const unsigned types[], size_t tail
  * @param types     -> Liste des types de chaque bateau présent dans le port. /!\ Elle doit correspondre à l'ordre de la liste des taxes.
  * @param taille    -> Nombre de bateaux total.
  * @param moyenne   -> Moyenne des taxes des bateaux du type sélectionné.
- * @param type      -> Type des bateaux pour lesquels nous voulons calculer la l'écart-type.
- * @return L'écart-type pour le type de bateaux séléctionné.
+ * @param type      -> Type des bateaux pour lesquels nous voulons calculer l'écart-type.
+ * @return L'écart-type pour le type de bateau séléctionné.
  */
 double calculerEcartType(const double taxes[], const unsigned types[], size_t taille, double moyenne, TypeBateau type);
 
 /**
  * Calcule la somme, la moyenne, la médiane et l'écart-type des taxes annuelles dues.
- * @param port          -> Port contenant des bateaux.
- * @param taillePort    -> Nombre de bateau total présent dans le port.
+ * @param port          -> Liste de bateaux présents dans le port.
+ * @param taillePort    -> Nombre de bateaux total présent dans le port.
  */
 void calculerStatistiques(Bateau *port, size_t taillePort);
 
