@@ -4,11 +4,13 @@ int main(void) {
 
 	Bateau port[] = {
 		voilier("Alinghi", 300),
-		peche("Espadon", 1000, 20),
-		plaisance("Farniente", 100, 100, "James Lamer"),
+		peche("Brochet", 1000, 20),
+		plaisance("Black Pearl", 100, 100, "Jack Sparrow"),
 		voilier("Queen Anne's Revenge", 400),
 		voilier("Vaudoise", 50),
 		voilier("Slave1", 50),
+		plaisance("Yellow submarine", 1000, 300, "John Lennon"),
+		plaisance("HMS Victory", 200, 200, "Horatio Nelson"),
 		plaisance("Flying Dutch", 20, 150, "Davy Jones")
 	};
 
