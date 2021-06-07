@@ -59,9 +59,9 @@ typedef union {
 } Genre;
 
 typedef struct {
-   const char* nomBateau;
-   Genre genre;
-   TypeBateau type;
+	TypeBateau type;
+	const char* nomBateau;
+	Genre genre;
 } Bateau;
 
 
