@@ -1,3 +1,16 @@
+/*
+ -----------------------------------------------------------------------------------
+ Nom du fichier : Bateaux.c
+ Auteur(s)      : Meli Léo, Guilan Mbayo
+ Date creation  : 27.05.2021
+
+ Description    : Fichier contenant les implémentations de fonctions d'un bateau.
+
+ Remarque(s)    : -
+
+ Compilateur    : Mingw-w64 gcc 8.1.0
+ -----------------------------------------------------------------------------------
+*/
 #include "Bateaux.h"
 
 void afficherBateaux(const Bateau *b) {

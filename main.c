@@ -1,3 +1,18 @@
+/*
+ -----------------------------------------------------------------------------------
+ Nom du fichier : main.c
+ Auteur(s)      : Meli Léo, Guilan Mbayo
+ Date creation  : 27.05.2021
+
+ Description    : Programme principal
+
+ Remarque(s)    : Selon les remarques faites dans le feedback du labo 1, il est nécessaire d'utiliser PRIu64, comme vu
+ 						en cours, afin d'afficher les size_t, or cela nous déclenche un warning que nous avons par conséquent
+ 						décidé d'ignorer.
+
+ Compilateur    : Mingw-w64 gcc 8.1.0
+ -----------------------------------------------------------------------------------
+*/
 #include "Bateaux.h"
 
 int main(void) {
@@ -17,7 +32,7 @@ int main(void) {
 	size_t taillePort = sizeof(port) / sizeof(Bateau);
 
 	for (size_t i = 0; i < taillePort; ++i) {
-		printf("BATEAU %d:\n", (int) i + 1);
+		printf("BATEAU %"PRIu64":\n", i + 1);
 		afficherBateaux(&port[i]);
 	}
 

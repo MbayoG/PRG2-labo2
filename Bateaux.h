@@ -1,3 +1,16 @@
+/*
+ -----------------------------------------------------------------------------------
+ Nom du fichier : Bateaux.h
+ Auteur(s)      : Meli Léo, Guilan Mbayo
+ Date creation  : 27.05.2021
+
+ Description    : Prototypes des fonctions d'un bateau.
+
+ Remarque(s)    : -
+
+ Compilateur    : Mingw-w64 gcc 8.1.0
+ -----------------------------------------------------------------------------------
+*/
 #ifndef PRG2_LABO2_BATEAUX_H
 #define PRG2_LABO2_BATEAUX_H
 
