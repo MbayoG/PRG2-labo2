@@ -38,6 +38,6 @@ int main(void) {
 	}
 
 	calculerStatistiques(port, taillePort);
-	
+
 	return EXIT_SUCCESS;
 }

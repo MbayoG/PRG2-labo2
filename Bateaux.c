@@ -5,7 +5,7 @@
  Date creation  : 27.05.2021
 
  Description    : Fichier contenant les implémentations de fonctions de gestion d'un bateau, comme le calcul et
- 						l'affichage des taxes la création d'un bateau et l'affichage de ces caractéristiques.
+ 						l'affichage des taxes, la création d'un bateau et l'affichage de ces caractéristiques.
 
  Remarque(s)    : -
 
@@ -61,12 +61,12 @@ Bateau voilier(const char* nom, uint16_t surfaceVoilure) {
 }
 
 Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons) {
-	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur = {.typePeche = {.tonnes_poissons = tonnes_poissons}}}},
+	return (Bateau) {.nomBateau = nom, .genre = {.moteur = {.puissance = puissance, .typeBateauMoteur = {.typePeche = {.tonnes_poissons = tonnes_poissons}}}},
 		.type = MOTEUR_PECHE};
 }
 
 Bateau plaisance(const char* nom, uint16_t puissance, uint8_t longueur, const char* proprietaire) {
-	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur ={.typePlaisance ={.longueur = longueur, .nomProprietaire = proprietaire}}}},
+	return (Bateau) {.nomBateau = nom, .genre = {.moteur = {.puissance = puissance, .typeBateauMoteur = {.typePlaisance = {.longueur = longueur, .nomProprietaire = proprietaire}}}},
 		.type = MOTEUR_PLAISANCE};
 }
 
