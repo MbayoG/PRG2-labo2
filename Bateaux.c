@@ -1,7 +1,7 @@
 #include "Bateaux.h"
 
 void afficherBateaux(const Bateau *b) {
-   const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
+	const char *typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 	printf(FORMAT_BATEAU"%s\n", "Nom", b->nomBateau);
 	printf(FORMAT_BATEAU"%s\n", "Genre", typeBateauChar[b->type]);
 	switch (b->type) {
@@ -181,7 +181,7 @@ void calculerStatistiques(Bateau *port, size_t taillePort) {
 }
 
 void afficherStatistiques(TypeBateau type, double somme, double moyenne, double mediane, double ecartType) {
-   const char* labelType[] = {"voiliers", "bateaux de peche", "bateaux de plaisance"};
+	const char *labelType[] = {"voiliers", "bateaux de peche", "bateaux de plaisance"};
 	printf(FORMAT_TAXES, labelType[type], somme, moyenne, mediane, ecartType);
 }
 

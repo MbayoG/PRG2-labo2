@@ -14,14 +14,14 @@ int main(void) {
 		plaisance("Flying Dutch", 20, 150, "Davy Jones")
 	};
 
-	size_t taillePort = sizeof(port)/sizeof(Bateau);
+	size_t taillePort = sizeof(port) / sizeof(Bateau);
 
-	for(size_t i = 0; i < taillePort; ++i){
-		printf("BATEAU %d:\n", (int)i+1);
+	for (size_t i = 0; i < taillePort; ++i) {
+		printf("BATEAU %d:\n", (int) i + 1);
 		afficherBateaux(&port[i]);
 	}
 
-   calculerStatistiques(port, taillePort);
+	calculerStatistiques(port, taillePort);
 
 
 	return EXIT_SUCCESS;

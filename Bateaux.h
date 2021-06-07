@@ -13,7 +13,7 @@
 
 #define TAXE_LIMITE_VOILIER 200.     // Limitation de la taxe spécifique pour les voiliers.
 #define TAXE_LIMITE_PECHE 20.        // Limitation de la taxe spécifique pour les bateaux de pêche.
-#define TAXE_LIMITE_PLAISANCE 100.  // Limitation de la taxe spécifique pour les bateaux de plaisance.
+#define TAXE_LIMITE_PLAISANCE 100.   // Limitation de la taxe spécifique pour les bateaux de plaisance.
 
 #define TAXE_SPECIFIQUE_VOILIER 25.    // Taxe spécifique pour les voiliers.
 #define TAXE_SPECIFIQUE_PECHE 100.     // Taxe spécifique pour les bateaux de pêche.
@@ -21,46 +21,46 @@
 
 #define TAXE_PLAISANCE_MULTIPLIEUR 15. // Multiplieur pour la taxe spécifique des bateaux de plaisance.
 
-#define FORMAT_TAXES "Taxes des %s (en Euros)\n  Somme : %.2f\n  Moyenne : %.2f\n  Mediane : %.2f\n  Ecart-type : %.2f\n\n" // Format pour l'affichage des statisqiques des taxes.
+#define FORMAT_TAXES "Taxes des %s (en Euros)\n  Somme : %.2f\n  Moyenne : %.2f\n  Mediane : %.2f\n  Ecart-type : %.2f\n\n" // Format pour l'affichage des statistiques des taxes.
 #define FORMAT_BATEAU "%-15s:" // Format pour l'affichage des bateaux.
 
 typedef enum {
-   VOILIER,
-   MOTEUR_PECHE,
-   MOTEUR_PLAISANCE
+	VOILIER,
+	MOTEUR_PECHE,
+	MOTEUR_PLAISANCE
 } TypeBateau;
 
 typedef struct {
-   uint16_t surfaceVoilure;
+	uint16_t surfaceVoilure;
 } Voilier;
 
 typedef struct {
-   uint8_t tonnes_poissons;
+	uint8_t tonnes_poissons;
 } Peche;
 
 typedef struct {
-   uint8_t longueur;
-   const char* nomProprietaire;
+	uint8_t longueur;
+	const char *nomProprietaire;
 } Plaisance;
 
 typedef union {
-   Peche typePeche;
-   Plaisance typePlaisance;
+	Peche typePeche;
+	Plaisance typePlaisance;
 } TypeBateauMoteur;
 
 typedef struct {
-   uint16_t puissance;
-   TypeBateauMoteur typeBateauMoteur;
+	uint16_t puissance;
+	TypeBateauMoteur typeBateauMoteur;
 } Moteur;
 
 typedef union {
-   Voilier voilier;
-   Moteur moteur;
+	Voilier voilier;
+	Moteur moteur;
 } Genre;
 
 typedef struct {
 	TypeBateau type;
-	const char* nomBateau;
+	const char *nomBateau;
 	Genre genre;
 } Bateau;
 
@@ -71,7 +71,7 @@ typedef struct {
  * @param b -> Valeur à comparer
  * @return -1 si inférieure; 0 si égale; 1 si supérieure.
  */
-int comparerDouble (const void * a, const void * b);
+int comparerDouble(const void *a, const void *b);
 
 /**
  * Affiche les statistiques des taxes
@@ -95,7 +95,7 @@ void afficherBateaux(const Bateau *b);
  * @param surfaceVoilure    -> Surface de voilure.
  * @return Le bateau créé.
  */
-Bateau voilier(const char* nom, uint16_t surfaceVoilure);
+Bateau voilier(const char *nom, uint16_t surfaceVoilure);
 
 /**
  * Crée un bateau de pêche.
@@ -104,7 +104,7 @@ Bateau voilier(const char* nom, uint16_t surfaceVoilure);
  * @param tonnes_poissons   -> Tonnes de poisson que le bateau est autorisé à pécher.
  * @return Le bateau créé.
  */
-Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons);
+Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons);
 
 /**
  * Crée un bateau de plaisance.
@@ -114,28 +114,28 @@ Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons);
  * @param proprietaire  -> Nom du propriétaire du bateau.
  * @return Le bateau créé.
  */
-Bateau plaisance(const char* nom, uint16_t puissance, uint8_t longueur, const char* proprietaire);
+Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire);
 
 /**
  * Calcul la taxe d'un voilier.
  * @param b -> Bateau de type Voilier.
  * @return La taxe du voilier.
  */
-double calculerVoilierTaxe(const Bateau* b);
+double calculerVoilierTaxe(const Bateau *b);
 
 /**
  * Calcul la taxe d'un bateau de pêche.
  * @param b -> Bateau de pêche.
  * @return La taxe du bateau de pêche.
  */
-double calculerPecheTaxe(const Bateau* b);
+double calculerPecheTaxe(const Bateau *b);
 
 /**
  * Calcul la taxe d'un bateau de plaisance.
  * @param b -> Bateau de plaisance.
  * @return La taxe du bateau de plaisance.
  */
-double calculerPlaisanceTaxe(const Bateau* b);
+double calculerPlaisanceTaxe(const Bateau *b);
 
 /**
  * Calcule la médiane pour un type de bateau.
