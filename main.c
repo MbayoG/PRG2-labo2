@@ -4,7 +4,8 @@
  Auteur(s)      : Meli Léo, Guilan Mbayo
  Date creation  : 27.05.2021
 
- Description    : Programme principal
+ Description    : Création d'un port et des bateaux s'y trouvant. Appelle des fonctions d'affichage des bateaux et des
+ 						statistiques des taxes par type de bateau.
 
  Remarque(s)    : Selon les remarques faites dans le feedback du labo 1, il est nécessaire d'utiliser PRIu64, comme vu
  						en cours, afin d'afficher les size_t, or cela nous déclenche un warning que nous avons par conséquent
@@ -37,7 +38,6 @@ int main(void) {
 	}
 
 	calculerStatistiques(port, taillePort);
-
-
+	
 	return EXIT_SUCCESS;
 }

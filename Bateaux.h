@@ -4,7 +4,7 @@
  Auteur(s)      : Meli Léo, Guilan Mbayo
  Date creation  : 27.05.2021
 
- Description    : Prototypes des fonctions d'un bateau.
+ Description    : Structure d'un bateau et prototypes des fonctions qui le gèrent.
 
  Remarque(s)    : -
 

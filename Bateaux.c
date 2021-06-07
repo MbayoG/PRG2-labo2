@@ -4,7 +4,8 @@
  Auteur(s)      : Meli Léo, Guilan Mbayo
  Date creation  : 27.05.2021
 
- Description    : Fichier contenant les implémentations de fonctions d'un bateau.
+ Description    : Fichier contenant les implémentations de fonctions de gestion d'un bateau, comme le calcul et
+ 						l'affichage des taxes la création d'un bateau et l'affichage de ces caractéristiques.
 
  Remarque(s)    : -
 
