@@ -73,7 +73,7 @@ typedef union {
 
 typedef struct {
 	TypeBateau type;
-	const char *nomBateau;
+	const char* nomBateau;
 	Genre genre;
 } Bateau;
 
@@ -84,7 +84,7 @@ typedef struct {
  * @param b -> Valeur à comparer
  * @return -1 si inférieure; 0 si égale; 1 si supérieure.
  */
-int comparerDouble(const void *a, const void *b);
+int comparerDouble(const void* a, const void* b);
 
 /**
  * Affiche les statistiques des taxes
@@ -100,7 +100,7 @@ void afficherStatistiques(TypeBateau type, double somme, double moyenne, double 
  * Affiche un bateau.
  * @param b -> Bateau à afficher.
  */
-void afficherBateaux(const Bateau *b);
+void afficherBateaux(const Bateau* b);
 
 /**
  * Crée un voilier.
@@ -108,7 +108,7 @@ void afficherBateaux(const Bateau *b);
  * @param surfaceVoilure    -> Surface de voilure.
  * @return Le bateau créé.
  */
-Bateau voilier(const char *nom, uint16_t surfaceVoilure);
+Bateau voilier(const char* nom, uint16_t surfaceVoilure);
 
 /**
  * Crée un bateau de pêche.
@@ -117,7 +117,7 @@ Bateau voilier(const char *nom, uint16_t surfaceVoilure);
  * @param tonnes_poissons   -> Tonnes de poisson que le bateau est autorisé à pécher.
  * @return Le bateau créé.
  */
-Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons);
+Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons);
 
 /**
  * Crée un bateau de plaisance.
@@ -127,28 +127,28 @@ Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons);
  * @param proprietaire  -> Nom du propriétaire du bateau.
  * @return Le bateau créé.
  */
-Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire);
+Bateau plaisance(const char* nom, uint16_t puissance, uint8_t longueur, const char* proprietaire);
 
 /**
  * Calcul la taxe d'un voilier.
  * @param b -> Bateau de type Voilier.
  * @return La taxe du voilier.
  */
-double calculerVoilierTaxe(const Bateau *b);
+double calculerVoilierTaxe(const Bateau* b);
 
 /**
  * Calcul la taxe d'un bateau de pêche.
  * @param b -> Bateau de pêche.
  * @return La taxe du bateau de pêche.
  */
-double calculerPecheTaxe(const Bateau *b);
+double calculerPecheTaxe(const Bateau* b);
 
 /**
  * Calcul la taxe d'un bateau de plaisance.
  * @param b -> Bateau de plaisance.
  * @return La taxe du bateau de plaisance.
  */
-double calculerPlaisanceTaxe(const Bateau *b);
+double calculerPlaisanceTaxe(const Bateau* b);
 
 /**
  * Calcule la médiane pour un type de bateau.
@@ -177,6 +177,6 @@ double calculerEcartType(const double taxes[], const unsigned types[], size_t ta
  * @param port          -> Liste de bateaux présents dans le port.
  * @param taillePort    -> Nombre de bateaux total présent dans le port.
  */
-void calculerStatistiques(Bateau *port, size_t taillePort);
+void calculerStatistiques(Bateau* port, size_t taillePort);
 
 #endif //PRG2_LABO2_BATEAUX_H

@@ -13,8 +13,8 @@
 */
 #include "Bateaux.h"
 
-void afficherBateaux(const Bateau *b) {
-	const char *typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
+void afficherBateaux(const Bateau* b) {
+	const char* typeBateauChar[] = {"Voilier", "Bateau de peche", "Bateau de plaisance"};
 	printf(FORMAT_BATEAU"%s\n", "Nom", b->nomBateau);
 	printf(FORMAT_BATEAU"%s\n", "Genre", typeBateauChar[b->type]);
 	switch (b->type) {
@@ -37,12 +37,12 @@ void afficherBateaux(const Bateau *b) {
 	printf("\n");
 }
 
-int comparerDouble(const void *a, const void *b) {
+int comparerDouble(const void* a, const void* b) {
 	// Comme la comparaison de double par l'opérande == est impossible.
 	// Nous comparons les valeurs par leurs différences.
 	int ret = 0;
-	double const *pa = a;
-	double const *pb = b;
+	double const* pa = a;
+	double const* pb = b;
 	double diff = *pa - *pb;
 	if (diff > 0) {
 		ret = 1;
@@ -54,36 +54,36 @@ int comparerDouble(const void *a, const void *b) {
 	return ret;
 }
 
-Bateau voilier(const char *nom, uint16_t surfaceVoilure) {
+Bateau voilier(const char* nom, uint16_t surfaceVoilure) {
 	return (Bateau) {.nomBateau = nom, .genre = {.voilier = {.surfaceVoilure = surfaceVoilure}},
 		.type = VOILIER};
 }
 
-Bateau peche(const char *nom, uint16_t puissance, uint8_t tonnes_poissons) {
+Bateau peche(const char* nom, uint16_t puissance, uint8_t tonnes_poissons) {
 	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur = {.typePeche = {.tonnes_poissons = tonnes_poissons}}}},
 		.type = MOTEUR_PECHE};
 }
 
-Bateau plaisance(const char *nom, uint16_t puissance, uint8_t longueur, const char *proprietaire) {
+Bateau plaisance(const char* nom, uint16_t puissance, uint8_t longueur, const char* proprietaire) {
 	return (Bateau) {.nomBateau = nom, .genre = {.moteur ={.puissance = puissance, .typeBateauMoteur ={.typePlaisance ={.longueur = longueur, .nomProprietaire = proprietaire}}}},
 		.type = MOTEUR_PLAISANCE};
 }
 
-double calculerVoilierTaxe(const Bateau *b) {
+double calculerVoilierTaxe(const Bateau* b) {
 	double taxe = TAXE_BASE_VOILIER;
 	if (b->genre.voilier.surfaceVoilure >= TAXE_LIMITE_VOILIER)
 		taxe += TAXE_SPECIFIQUE_VOILIER;
 	return taxe;
 }
 
-double calculerPecheTaxe(const Bateau *b) {
+double calculerPecheTaxe(const Bateau* b) {
 	double taxe = TAXE_BASE_MOTEUR;
 	if (b->genre.moteur.typeBateauMoteur.typePeche.tonnes_poissons >= TAXE_LIMITE_PECHE)
 		taxe += TAXE_SPECIFIQUE_PECHE;
 	return taxe;
 }
 
-double calculerPlaisanceTaxe(const Bateau *b) {
+double calculerPlaisanceTaxe(const Bateau* b) {
 	double taxe = TAXE_BASE_MOTEUR;
 	if (b->genre.moteur.puissance < TAXE_LIMITE_PLAISANCE)
 		taxe += TAXE_SPECIFIQUE_PLAISANCE;
@@ -129,7 +129,7 @@ double calculerEcartType(const double taxes[], const unsigned types[], size_t ta
 	return sqrt(ecartType / cpt);
 }
 
-void calculerStatistiques(Bateau *port, size_t taillePort) {
+void calculerStatistiques(Bateau* port, size_t taillePort) {
 
 	// Étant données que nous ne connaissons pas encore le nombre de bateaux par type
 	// et que nous ne voulons pas parcourir le port plus qu'il ne faut, ni initialiser des tableaux de trop grande tailles,
@@ -194,7 +194,7 @@ void calculerStatistiques(Bateau *port, size_t taillePort) {
 }
 
 void afficherStatistiques(TypeBateau type, double somme, double moyenne, double mediane, double ecartType) {
-	const char *labelType[] = {"voiliers", "bateaux de peche", "bateaux de plaisance"};
+	const char* labelType[] = {"voiliers", "bateaux de peche", "bateaux de plaisance"};
 	printf(FORMAT_TAXES, labelType[type], somme, moyenne, mediane, ecartType);
 }
 
